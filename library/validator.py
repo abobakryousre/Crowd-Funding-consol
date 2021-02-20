@@ -1,3 +1,6 @@
+import re
+
+
 def check_username(username):
     if username is None or username.isdigit():
         return False
@@ -10,3 +13,20 @@ def confirm_password(first_password, second_password):
         return True
     else:
         return False
+
+
+def check_email(email):
+    regex = '^[a-z][a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    if re.search(regex, email):
+        return True
+    else:
+        return False
+
+
+def check_mobile(mobile):
+
+    if re.match(r"(01)[0-9]{9}", mobile):
+        return True
+    else:
+        return False
+
