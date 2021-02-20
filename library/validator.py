@@ -1,5 +1,4 @@
 import re
-import json
 
 
 def check_username(username):
@@ -31,14 +30,9 @@ def check_mobile(mobile):
         return False
 
 
-
-
-
 def check_time_structure(start_time, end_time):
     time_regex = r'^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$'
     if re.match(time_regex, start_time) and re.match(time_regex, end_time):
         return True
     else:
         return False
-
-
