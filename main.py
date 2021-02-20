@@ -10,6 +10,7 @@ def display_main_menu():
     while not login:
         print("1) Login")
         print("2) Sign Up ")
+        print("3) Exit ")
         try:
             option = int(input("enter your option: "))
         except:
@@ -20,6 +21,10 @@ def display_main_menu():
                 login = True
             elif option == 2:
                 load_sginup_page()
+            elif option == 3:
+                break
+            else:
+                print("You option not  in range 1 -> 3 !")
 
 
 def load_sginup_page():
@@ -80,11 +85,11 @@ def load_login_page():
         username = input("email: ")
         password = input("Password: ")
         if not valid_user(username, password):
-            print("Invalid Username or Password, Please try again..")
+            print("Invalid Email or Password, Please try again..")
         else:
             logedin = True
+            print(usr_information)
             load_project_pages()
-
 
 def valid_user(username, password):
     valid = False
@@ -104,8 +109,85 @@ def valid_user(username, password):
     else:
         return False
 
-
 def load_project_pages():
+    print("1) Create a new Project")
+    print("2) View all projects ")
+    print("3) Edit  project ")
+    print("4) Delete  project")
+    try:
+        option = int(input("enter your option: "))
+    except:
+        print("Your option must be a number! ")
+    else:
+        if option == 1:
+            create_project()
+        elif option == 2:
+            pass
+        elif option == 3:
+            pass
+        elif option == 4:
+            pass
+        else:
+            print("You option not  in range 1 -> 4 !")
+
+
+def create_project():
+    created = False
+    while not created:
+        title = input("Enter project title: ")
+        if not title.isalpha():
+            print("Please enter  a valid title...")
+            continue
+
+        details = input("Project details: ")
+
+        if not details.isalpha():
+            print("Please enter  a valid title...")
+            continue
+
+        target = input("Project total target: ")
+        if not target.isdigit():
+            print("Please enter a number for project target..")
+            continue
+
+        start_time = input("Start time: ")
+        end_time = input("End time: ")
+
+        if not validator.check_time_structure(start_time, end_time):
+            print("Please enter a valid date structure, example( yyyy-mm-dd/ 2020-04-31 )")
+            continue
+        else:
+            add_new_project(title, details, target, start_time, end_time)
+            created = True
+
+
+def add_new_project(title, details, target, start_time, end_time):
+    new_project = {
+        "title": title,
+        "details": details,
+        "target": target,
+        "start_time": start_time,
+        "end_time": end_time,
+        "id": usr_information.get("id")
+    }
+
+    with open("projects.txt", "r") as projects:
+        all_projects = json.load(projects)
+        all_projects.append(new_project)
+
+    with open("projects.txt", "w") as projects:
+        json.dump(all_projects, projects)
+
+
+def view_all_projects():
+    pass
+
+
+def edite_poject():
+    pass
+
+
+def delete_project():
     pass
 
 
