@@ -91,6 +91,7 @@ def load_login_page():
             print(usr_information)
             load_project_pages()
 
+
 def valid_user(username, password):
     valid = False
     global usr_information
@@ -109,6 +110,7 @@ def valid_user(username, password):
     else:
         return False
 
+
 def load_project_pages():
     print("1) Create a new Project")
     print("2) View all projects ")
@@ -122,7 +124,7 @@ def load_project_pages():
         if option == 1:
             create_project()
         elif option == 2:
-            pass
+            view_all_projects()
         elif option == 3:
             pass
         elif option == 4:
@@ -180,7 +182,12 @@ def add_new_project(title, details, target, start_time, end_time):
 
 
 def view_all_projects():
-    pass
+    with open("projects.txt", "r") as projects:
+        all_projects = json.load(projects)
+
+        for projects in all_projects:
+            for key in projects:
+                print(f"{key} : {projects[key]}")
 
 
 def edite_poject():
