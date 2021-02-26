@@ -5,34 +5,9 @@ import model
 usr_information = {}
 
 
-def add_new_project(title, details, target, start_time, end_time):
-    new_project = {
-        "title": title,
-        "details": details,
-        "target": target,
-        "start_time": start_time,
-        "end_time": end_time,
-        "id": usr_information.get("id")
-    }
-
-    with open("projects.txt", "r") as projects:
-        all_projects = json.load(projects)
-        all_projects.append(new_project)
-
-    with open("projects.txt", "w") as projects:
-        json.dump(all_projects, projects)
 
 
-def view_all_projects():
-    with open("projects.txt", "r") as projects:
-        all_projects = json.load(projects)
-        if all_projects:
-            for projects in all_projects:
-                for key in projects:
-                    print(f"{key} : {projects[key]}")
-                print("--------------------------------")
-        else:
-            print("No project Created yet!")
+
 
 
 def load_edit_project_page():

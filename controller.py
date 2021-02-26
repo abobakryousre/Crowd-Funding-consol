@@ -1,6 +1,6 @@
 from library import validator as v
-import model as m
 import json
+
 
 class User:
 
@@ -12,6 +12,15 @@ class User:
         self.mobile = mobile
 
 
+class Project:
+
+    def __init__(self, title, details, target, start_time, end_time, owner_email):
+        self.title = title
+        self.details = details
+        self.target = target
+        self.start_time = start_time
+        self.end_time = end_time
+        self.owner_email = owner_email
 
 
 class Controller:
@@ -67,10 +76,19 @@ class Controller:
 
     def add_new_user(self, first_name, last_name, email, password, mobile):
         new_usr = User(first_name, last_name, email, password, mobile)
-        new_usr = json.dumps(new_usr.__dict__)  # convert class obj to string
+        new_usr = json.dumps(new_usr.__dict__)  # convert class obj to json string
         self.model.add_new_user(new_usr)
 
-    def add_new_project(self, new_project):
-        pass
+    def add_new_project(self, title, details, target, start_time, end_time):
+        owner = self.get_user_information()
+        new_project = Project(title, details, target, start_time, end_time, owner.get("email"))
+        new_project = json.dumps(new_project.__dict__)  # convert class obj to json string
+        self.model.add_new_project(new_project)
 
+    def get_all_projects(self):
+        all_projects = self.model.get_all_projects()
+        tmp_list = [] # convert the json string to objects
+        for project in all_projects:
+            tmp_list.append(json.loads(project))
 
+        return tmp_list

@@ -127,12 +127,23 @@ class View:
             else:
                 controller.add_new_project(title, details, target, start_time, end_time)
                 created = True
+
     @staticmethod
     def view_all_projects(controller):
-        pass
+        all_projects = controller.get_all_projects()
+        if all_projects:
+            for projects in all_projects:
+                for key in projects:
+                    print(f"{key} : {projects[key]}")
+                print("--------------------------------")
+        else:
+            print("No project Created yet!")
+
+
     @staticmethod
     def load_edit_project_page(controller):
         pass
+
     @staticmethod
     def load_delete_project_page(controller):
         pass
