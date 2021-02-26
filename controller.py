@@ -92,3 +92,15 @@ class Controller:
             tmp_list.append(json.loads(project))
 
         return tmp_list
+    def project_exist(self, project_title):
+        owner = self.get_user_information()
+        all_projects = self.model.get_all_projects()
+
+        for project in all_projects:
+            project = json.loads(project)
+            if project.get("owner_email") == owner.get("email") and project.get("title") == project_title:
+                return True
+
+        return False
+    def remove_project(self, project_title):
+        self.model.remove_project(project_title)

@@ -23,18 +23,7 @@ def load_edit_project_page():
             correct_title = True
 
 
-def project_exist(project_title):
-    exist = False
-    with open("projects.txt", "r") as projects:
-        all_projects = json.load(projects)
-        for project in all_projects:
-            if project.get("id") == usr_information.get("id") and project.get("title") == project_title:
-                exist = True
 
-    if not exist:
-        return False
-    else:
-        return True
 
 
 def update_project(project_title):
@@ -99,16 +88,7 @@ def load_delete_project_page():
             print("The project Removed successfully....")
 
 
-def remove_project(project_title):
-    with open("projects.txt", "r") as projects:
-        all_projects = json.load(projects)
-        updated_projects = []
-        for project in all_projects:
-            if project.get("title") != project_title:
-                updated_projects.append(project)
 
-    with open("projects.txt", "w") as projects:
-        json.dump(updated_projects, projects)
 
 
 if __name__ == '__main__':

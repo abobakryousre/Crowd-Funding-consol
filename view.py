@@ -1,4 +1,3 @@
-
 class View:
 
     def __init__(self, controller):
@@ -34,7 +33,6 @@ class View:
             else:
                 password = input("Password: ")
 
-                
             if not controller.valid_user(email, password):
                 print("Invalid Email or Password, Please try again..")
             else:
@@ -139,11 +137,18 @@ class View:
         else:
             print("No project Created yet!")
 
-
     @staticmethod
     def load_edit_project_page(controller):
         pass
 
     @staticmethod
     def load_delete_project_page(controller):
-        pass
+        correct_title = False
+        while not correct_title:
+            project_title = input("Enter project title: ")
+            if not controller.project_exist(project_title):
+                print("This not exist in your projects.., please check it again")
+            else:
+                controller.remove_project(project_title)
+                correct_title = True
+                print("The project Removed successfully....")

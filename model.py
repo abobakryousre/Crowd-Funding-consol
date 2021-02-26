@@ -29,3 +29,13 @@ class Model:
             all_projects = json.load(projects)
             return all_projects
 
+    def remove_project(self, project_title):
+        all_projects = self.get_all_projects()
+        updated_projects = []
+        for project in all_projects:
+            project = json.loads(project)
+            if project.get("title") != project_title:
+                updated_projects.append(project)
+
+        with open("projects.txt", "w") as projects:
+            json.dump(updated_projects, projects)
