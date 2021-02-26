@@ -1,6 +1,5 @@
 from library import validator
 import json
-
 usr_information = {}
 
 
@@ -11,7 +10,7 @@ def display_main_menu():
         print("3) Exit ")
         try:
             option = int(input("enter your option: "))
-        except:
+        except ValueError:
             print("Your option must be a number! ")
         else:
             if option == 1:
@@ -24,19 +23,20 @@ def display_main_menu():
                 print("You option not  in range 1 -> 3 !")
 
 
+
 def load_signup_page():
     signedup = False
     while not signedup:
         first_name = input("Enter your first name: ")
-
         if not validator.check_username(first_name):
             print("Invalid Name!")
             continue
-        last_name = input("Enter your last name: ")
 
+        last_name = input("Enter your last name: ")
         if not validator.check_username(last_name):
             print("Invalid Name !")
             continue
+
         email = input("Enter your email: ")
         if not validator.check_email(email):
             print("Invalid Email !")
@@ -79,33 +79,26 @@ def add_new_user(first_name, last_name, email, password, mobile):
 def load_login_page():
     logedin = False
     while not logedin:
-        username = input("email: ")
+        email = input("email: ")
         password = input("Password: ")
-        if not valid_user(username, password):
+        if not valid_user(email, password):
             print("Invalid Email or Password, Please try again..")
         else:
             logedin = True
-            print(usr_information)
             load_project_pages()
 
 
-def valid_user(username, password):
-    valid = False
+def valid_user(email, password):
     global usr_information
 
     with open("users.txt", "r") as users:
         all_users = json.load(users)
         for user in all_users:
-            if username == user.get("email"):
-                if password == user.get("password"):
-                    valid = True
-                    usr_information = user
-                    break
+            if email == user.get("email") and password == user.get("password"):
+                usr_information = user
+                return True
 
-    if valid:
-        return True
-    else:
-        return False
+    return False
 
 
 def load_project_pages():
@@ -187,6 +180,7 @@ def view_all_projects():
             for projects in all_projects:
                 for key in projects:
                     print(f"{key} : {projects[key]}")
+                print("--------------------------------")
         else:
             print("No project Created yet!")
 
@@ -220,6 +214,7 @@ def project_exist(project_title):
 
 def update_project(project_title):
     updated = False
+
     while not updated:
         key = input(
             "Which section you would like to updated or enter 'q' to exit example(title, details, target, start_time, end_time): ")
@@ -260,6 +255,8 @@ def update_project_value(project_title, key, value):
         for project in all_projects:
             if project.get("title") == project_title:
                 project[key] = value
+                break
+
 
     with open("projects.txt", "w") as projects:
         json.dump(all_projects, projects)
@@ -289,9 +286,5 @@ def remove_project(project_title):
         json.dump(updated_projects, projects)
 
 
-def main():
-    display_main_menu()
-
-
 if __name__ == '__main__':
-    main()
+    display_main_menu()
