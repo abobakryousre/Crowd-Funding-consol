@@ -124,6 +124,7 @@ class View:
                 continue
             else:
                 controller.add_new_project(title, details, target, start_time, end_time)
+                print("Project Created Successfully.....")
                 created = True
 
     @staticmethod
@@ -139,7 +140,16 @@ class View:
 
     @staticmethod
     def load_edit_project_page(controller):
-        pass
+        correct_title = False
+        while not correct_title:
+            project_title = input("Enter project title or 'q' to exit: ")
+            if project_title == "q":
+                 break
+            elif not controller.project_exist(project_title):
+                print("This not exist in your projects.., please check it again")
+            else:
+                View.update_project(project_title, controller)
+                correct_title = True
 
     @staticmethod
     def load_delete_project_page(controller):
@@ -152,3 +162,40 @@ class View:
                 controller.remove_project(project_title)
                 correct_title = True
                 print("The project Removed successfully....")
+
+    @staticmethod
+    def update_project(project_title, controller):
+        updated = False
+
+        while not updated:
+            key = input(
+                "Which section you would like to updated or enter 'q' to exit example(title, details, target, start_time, end_time): ")
+
+            if key == "q":
+                break
+
+            elif key == "title" or key == "details" or key == "target" or key == "start_time" or key == "end_time":
+                value = input("Enter the new value: ")
+                if key == "title":
+                    if not value.isalpha():
+                        print("Invalid title name, the title should be contain only characters")
+                    else:
+                        updated = True
+
+                elif key == "target":
+                    if not value.isdigit():
+                        print("Invalid target.., please enter numbers for project target")
+                    else:
+                        updated = True
+                elif key == "start_time" or key == "end_time":
+                    if not controller.check_time_structure(key, key):
+                        print("Invalid date structure, please try again..")
+                    else:
+                        updated = True
+
+            else:
+                print("this section does not exist, please try again...")
+
+        if updated:
+            controller.update_project_value(project_title, key, value)
+            print("Project Updated successfully..")

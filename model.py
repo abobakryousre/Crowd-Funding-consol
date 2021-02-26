@@ -39,3 +39,20 @@ class Model:
 
         with open("projects.txt", "w") as projects:
             json.dump(updated_projects, projects)
+
+    def update_project(self, project_title, key, value):
+        all_projects = self.get_all_projects()
+        updated_projects = []
+        for project in all_projects:
+            tmp_project = json.loads(project)
+            if tmp_project.get("title") == project_title:
+                tmp_project[key] = value
+                new_updated_project = json.dumps(tmp_project)
+                updated_projects.append(new_updated_project)
+                break
+            else:
+                updated_projects.append(project)
+
+        with open("projects.txt", "w") as projects:
+            print(updated_projects)
+            json.dump(updated_projects, projects)
